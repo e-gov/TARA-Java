@@ -134,8 +134,6 @@ public class ValidationService {
             return false;
         }
 
-        return true;
-
     }
     
     private String base64UrlDecode(String input) {

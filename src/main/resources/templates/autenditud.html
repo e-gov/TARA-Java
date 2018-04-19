@@ -1,18 +1,24 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>TARA Demo (Java)</title>
+
+  <!-- JQuery -->
+  <script src="https://code.jquery.com/jquery.min.js"></script>
+
+  <!-- Material Design icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet">
+
   <link rel="stylesheet" type="text/css" href="../static/css/style.css" th:href="@{css/style.css}"/>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script>
-    if(window.opener) {
-      window.opener.location.href = '/connected'
-      window.close()
-    }
-  </script>
+
 </head>
 <body>
-  <a href="/">Home</a>
+  <h2>TARA Demo (Java)</h2>
+
   <h3>Autenditud!</h3>
   <div th:with="firstPer=${session.sub}">
 	

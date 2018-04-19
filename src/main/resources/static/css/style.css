@@ -1,17 +1,49 @@
 body {
-  font-family: "Helvetica Neue",HelveticaNeue,Helvetica,Arial,sans-serif;
+  max-width: 40em;
+  margin: 0 0; 
+  padding: 0.6em 1.5em 6em 2em; 
 }
 
-a:visited {
-  color: #0000ee;
+body, input {
+  font-family: 'Segoe UI', Arial, serif;
+  font-size: 16px; 
+  color: #24292E !important;
+  line-height: 1.5 !important;
+}  
+
+.pais {
+  font-family: 'Anonymous Pro', sans-serif;
+  font-size: 13pt; margin-bottom: 8px;
 }
 
-.imgLink {
-  text-decoration: none;
-  display: inline-block;
-  margin: 10px;
+h1 {
+  font-size: 24px !important;
+  font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  margin-top: 1em;
+  margin-bottom: 1rem;
 }
 
-#result {
-  white-space: pre-wrap;
+.ikoon {
+  font-family: 'Material Icons';
+  font-size: 48px; color: #757575;
+}
+
+a, a:hover, a:active, a:visited {
+  color: 292B2C !important;
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  text-decoration-color: DarkBlue;
+}
+
+.ok { color: green; }
+.nok { color: Tomato; }
+
+.kood {
+  border: 1px dotted Tomato;
+  color: Tomato;
+  border-radius: 4px;
+  padding: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 14pt;
 }

@@ -101,6 +101,8 @@ public class ValidationService {
             return false;
         }
 
+        JSONObject TARAvoti = hangiTARAvoti();
+
         /*
         // Kontrolli tõendi allkirja
         HashMap<String,JSONObject> keyMap = getKeyMapFromJWKSUri();
@@ -112,27 +114,26 @@ public class ValidationService {
         //first get the kid from the header.
         String keyId = idTokenHeaderJson.getString("kid");
         JSONObject keyDetails = keyMap.get(keyId);
-        
-        //now get the exponent (e) and modulo (n) to form the PublicKey
-        String exponent = keyDetails.getString("e");
-        String modulo = keyDetails.getString("n");
+        */
 
-        //build the public key
+        // Koosta PublicKey
+        String exponent = TARAvoti.getString("e");
+        String modulo = TARAvoti.getString("n");
+
         PublicKey publicKey = getPublicKey(modulo, exponent);
 
         byte[] data = (idTokenParts[0] + "." + idTokenParts[1]).getBytes(StandardCharsets.UTF_8);
 
+        // Kontrolli allkirja
         try {
-            //verify token using public key
             boolean isSignatureValid = verifyUsingPublicKey(data, idTokenSignature, publicKey);
-            logger.debug("isSignatureValid: " + isSignatureValid);
+            logger.info("Allkiri õige: " + isSignatureValid);
             return isSignatureValid;
         } catch (GeneralSecurityException e) {
-            logger.error("Exception while validating ID token ", e);
+            logger.error("Erind identsustõendi allkirja kontrollimisel ", e);
             return false;
         }
 
-        */
         return true;
 
     }
@@ -148,6 +149,43 @@ public class ValidationService {
         byte[] decodedBytes = decoder.decode(input);
 
         return decodedBytes;
+    }
+
+    /**
+     * Hangib HTTP GET päringuga TARA allkirjavõtme
+     * 
+     * @return - TARA avalik allkirjavõti, JSONObject-na
+     */
+    private JSONObject hangiTARAvoti() {
+
+        // Valmista HTTP GET päring
+        HttpGet TARAKeyRequest =
+          new HttpGet(oAuth2Configuration.getTARAKeyEndpoint());
+
+        try {
+
+            HttpResponse response = CLIENT.execute(TARAKeyRequest);
+
+            if (response.getStatusLine().getStatusCode() != 200) {
+                logger.info("TARA allkirjavõtme hankimine ebaõnnestus");
+                return null;
+            }
+
+            StringBuffer result = httpHelper.getResult(response);
+            logger.debug("Saadud võti: " + result);
+
+            JSONObject jwksPayload = new JSONObject(result.toString());
+            JSONArray keysArray = jwksPayload.getJSONArray("keys");
+
+            JSONObject voti = keysArray.getJSONObject(0);
+
+            return voti;
+        }
+        catch (Exception ex) {
+            logger.error("Erind TARA allkirjavõtme hankimisel: ", ex);
+            return null;
+        }
+
     }
 
     /*

@@ -24,6 +24,10 @@ public class OAuth2Configuration {
     	return env.getProperty("TARATokenEndpoint");
     }
     
+    public String getTARAKeyEndpoint() {
+    	return env.getProperty("TARAKeyEndpoint");
+    }
+    
 	public String getSimpleScope() {
 		return env.getProperty("SimpleScope");
 	}

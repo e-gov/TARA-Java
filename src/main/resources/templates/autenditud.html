@@ -1,9 +1,6 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>TARA Demo (Java)</title>
 
   <link rel="stylesheet" type="text/css" href="../static/css/style.css" th:href="@{css/style.css}"/>
@@ -13,11 +10,8 @@
   <h2>TARA Demo (Java)</h2>
 
   <h3>Autenditud!</h3>
-  <div th:with="firstPer=${session.sub}">
 	
-	    <p>Welcome <span th:text="${firstPer}" />!</p>
-	  
-  </div>
-  
+  <p>Welcome, <code th:text="${session.sub}" />!</p>
+	   
 </body>
 </html>

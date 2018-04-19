@@ -75,32 +75,31 @@ public class CallbackController {
             /* Päri identsustõend */
             IDTokenResponse IDTokenResponse = requestIDToken(authCode, session);  
             
-            /*
-             * save token to session
-             * In real usecase, this is where tokens would have to be persisted (to a SQL DB, for example). 
-             * Update your Datastore here with user's AccessToken and RefreshToken along with the realmId
-            */
-            /* session.setAttribute("access_token", IDTokenResponse.getAccessToken());
-            session.setAttribute("refresh_token", IDTokenResponse.getRefreshToken()); */
-         
-            /* 
-             * However, in case of OpenIdConnect, when you request OpenIdScopes during authorization,
-             * you will also receive IDToken from Intuit. You first need to validate that the IDToken actually came from Intuit.
-             */
-            if (StringUtils.isNotBlank(IDTokenResponse.getIdToken())) {
-               if(validationService.isValidIDToken(IDTokenResponse.getIdToken())) {
+            // Eralda vastusest identsustõend
+            String IDToken = IDTokenResponse.getIdToken();
+
+            // Kui identsustõend ei ole tühi,
+            if (StringUtils.isNotBlank(IDToken)) {
+               // siis kontrolli identsustõendit
+               if(validationService.isValidIDToken(IDToken, session)) {
                    logger.info("Identsustõend kontrollitud");
-                   //get user info
-                   // saveUserInfo(IDTokenResponse.getAccessToken(), session);
                }
             }
             
+            // Tagasta sirvikusse leht "autenditud"
             return "autenditud";
         }
         logger.info("Viga: State väärtus ei klapi" );
         return null;
     }
 
+    /**
+     * Pärib identsustõendi
+     * 
+     * @param auth_code - volituskood
+     * @param session   - seansiandmete hoidja
+     * @return          - päringu vastus - JSON teisendatud POJO-ks
+     */
     private IDTokenResponse requestIDToken(String auth_code, HttpSession session) {
         logger.info("inside bearer tokens");
 
@@ -121,9 +120,7 @@ public class CallbackController {
             }
 
             StringBuffer result = httpHelper.getResult(response);
-            logger.debug("Saadud identsustõend: " + result);
-
-            System.out.println("Saadud identsustõend: " + result);
+            logger.debug("Identsustõendi päringu vastus: " + result);
 
             return mapper.readValue(result.toString(), IDTokenResponse.class);
             
@@ -132,40 +129,5 @@ public class CallbackController {
         }
         return null;
     }
-
-    /*
-    private void saveUserInfo(String accessToken, HttpSession session) {
-        //Ideally you would fetch the realmId and the accessToken from the data store based on the user account here.
-        HttpGet userInfoReq = new HttpGet(oAuth2Configuration.getUserProfileApiHost());
-        userInfoReq.setHeader("Accept", "application/json");
-        userInfoReq.setHeader("Authorization","Bearer "+accessToken);
-
-        try {
-            HttpResponse response = CLIENT.execute(userInfoReq);
-
-            logger.info("Response Code : "+ response.getStatusLine().getStatusCode());
-            if (response.getStatusLine().getStatusCode() == 200) {
-                
-                StringBuffer result = httpHelper.getResult(response);
-                logger.debug("raw result for user info= " + result);
-
-                //Save the UserInfo here.
-                JSONObject userInfoPayload = new JSONObject(result.toString());
-                session.setAttribute("sub", userInfoPayload.get("sub"));
-                session.setAttribute("givenName", userInfoPayload.get("givenName"));
-                session.setAttribute("email", userInfoPayload.get("email"));
-                
-            } else {
-                logger.info("failed getting user info");
-            }
-
-            
-        }
-        catch (Exception ex) {
-            logger.error("Exception while retrieving user info ", ex);
-        }
-    }
-
-    */
 
 }

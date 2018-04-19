@@ -25,7 +25,7 @@ import com.intuit.developer.sampleapp.oauth2.domain.OAuth2Configuration;
 import com.intuit.developer.sampleapp.oauth2.helper.HttpHelper;
 
 /**
- * @author dderose
+ * Identsustõendi kontrollija
  *
  */
 @Service
@@ -46,8 +46,9 @@ public class ValidationService {
      * @param idToken
      * @return
      */
-    public boolean isValidIDToken(String idToken) {
-        logger.debug("IdToken: " + idToken);
+    public boolean isValidIDToken(String idToken,
+      HttpSession session) {
+          
         String[] idTokenParts = idToken.split("\\.");
         
         if (idTokenParts.length < 3) {
@@ -62,6 +63,11 @@ public class ValidationService {
         JSONObject idTokenHeaderJson = new JSONObject(idTokenHeader);
         JSONObject idTokenHeaderPayload = new JSONObject(idTokenPayload);
         
+        // Eralda autenditud isiku identifikaator (isikukood)
+        String sub = idTokenHeaderPayload.getString("sub");
+        // ja salvesta seansihoidjasse
+        session.setAttribute("sub", sub);
+
         // Kontrolli tõendi väljaandjat
         String issuer = idTokenHeaderPayload.getString("iss");
         if(!issuer.equalsIgnoreCase(oAuth2Configuration.getIssuer())) {

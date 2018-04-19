@@ -10,6 +10,8 @@ import java.security.spec.RSAPublicKeySpec;
 import java.time.Instant;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -48,7 +50,7 @@ public class ValidationService {
      */
     public boolean isValidIDToken(String idToken,
       HttpSession session) {
-          
+
         String[] idTokenParts = idToken.split("\\.");
         
         if (idTokenParts.length < 3) {

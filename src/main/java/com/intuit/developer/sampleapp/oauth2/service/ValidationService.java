@@ -70,6 +70,14 @@ public class ValidationService {
         // ja salvesta seansihoidjasse
         session.setAttribute("sub", sub);
 
+        // Eralda autenditud isiku profiiliteave
+        JSONObject profiiliteave = idTokenHeaderPayload.getJSONObject("profile_attributes");
+        String eesnimi = profiiliteave.getString("given_name");
+        String perenimi = profiiliteave.getString("family_name");
+        // ja salvesta seansihoidlasse
+        session.setAttribute("given_name");
+        session.setAttribute("family_name");
+
         // Kontrolli tõendi väljaandjat
         String issuer = idTokenHeaderPayload.getString("iss");
         if(!issuer.equalsIgnoreCase(oAuth2Configuration.getIssuer())) {

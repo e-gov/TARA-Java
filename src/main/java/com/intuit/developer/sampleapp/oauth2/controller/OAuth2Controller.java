@@ -18,7 +18,7 @@ import com.intuit.developer.sampleapp.oauth2.helper.HttpHelper;
 import com.intuit.developer.sampleapp.oauth2.service.ValidationService;
 
 /**
- * @author dderose
+ * Autentimispäringu saatja
  *
  */
 @Controller
@@ -40,6 +40,7 @@ public class OAuth2Controller {
 		*/
 	@RequestMapping("/")
 	public String home() {
+		System.out.println("*** TARA-Java ***");
 		return "home";
 	}
 

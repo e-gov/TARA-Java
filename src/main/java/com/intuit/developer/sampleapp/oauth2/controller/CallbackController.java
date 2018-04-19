@@ -26,7 +26,7 @@ import com.intuit.developer.sampleapp.oauth2.helper.HttpHelper;
 import com.intuit.developer.sampleapp.oauth2.service.ValidationService;
 
 /**
- * @author dderose
+ * Tagasipöördumispäringu töötleja
  *
  */
 @Controller
@@ -45,15 +45,16 @@ public class CallbackController {
       HttpClientBuilder
         .create()
         .build();
+
     private static ObjectMapper mapper = new ObjectMapper();
     private static final Logger logger = Logger.getLogger(CallbackController.class);
     
     /**
-     * Tagasipöördumise käsitleja
+     * Tagasipöördumispäringu käsitleja
      *      
      * @param auth_code - volituskood
-     * @param state     - 
-     * @param session   - seansiandmete hoidmise struktuur
+     * @param state     - võltspäringuründe vastane turvatoken
+     * @param session   - seansiandmete hoidja
      * @return
      */
     @RequestMapping("/Callback")
@@ -67,6 +68,7 @@ public class CallbackController {
         
         String csrfToken = (String) session
           .getAttribute("csrfToken");
+
         if (csrfToken.equals(state)) {
             session.setAttribute("auth_code", authCode);
 
@@ -120,6 +122,8 @@ public class CallbackController {
 
             StringBuffer result = httpHelper.getResult(response);
             logger.debug("Saadud identsustõend: " + result);
+
+            System.out.println("Saadud identsustõend: " + result);
 
             return mapper.readValue(result.toString(), IDTokenResponse.class);
             

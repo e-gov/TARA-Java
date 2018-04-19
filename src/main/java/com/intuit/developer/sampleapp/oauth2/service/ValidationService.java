@@ -188,44 +188,6 @@ public class ValidationService {
 
     }
 
-    /*
-    private HashMap<String, JSONObject> getKeyMapFromJWKSUri() {
-
-        HttpGet getJwks = new HttpGet(oAuth2Configuration.getIntuitJsksURI());
-        getJwks.setHeader("Accept", "application/json");
-
-        try {
-
-            HttpResponse response = CLIENT.execute(getJwks);
-
-            logger.debug("Response Code : "+ response.getStatusLine().getStatusCode());
-            if (response.getStatusLine().getStatusCode() != 200) {
-                logger.debug("failed JWKS URI");
-                return null;
-            }
-
-            StringBuffer result = httpHelper.getResult(response);
-            logger.debug("raw result for JWKS=" + result);
-
-            HashMap<String, JSONObject> retMap = new HashMap<>();
-            JSONObject jwksPayload = new JSONObject(result.toString());
-            JSONArray keysArray = jwksPayload.getJSONArray("keys");
-
-            for (int i=0;i<keysArray.length();i++) {
-                JSONObject object = keysArray.getJSONObject(i);
-                String keyId = object.getString("kid");
-                retMap.put(keyId,object);
-            }
-            return retMap;
-        }
-        catch (Exception ex) {
-            logger.error("Exception while retrieving jwks ", ex);
-            return null;
-        }
-
-    }
-    */
-
     private PublicKey getPublicKey(String MODULUS, String EXPONENT) {
         byte[] nb = base64UrlDecodeToBytes(MODULUS);
         byte[] eb = base64UrlDecodeToBytes(EXPONENT);

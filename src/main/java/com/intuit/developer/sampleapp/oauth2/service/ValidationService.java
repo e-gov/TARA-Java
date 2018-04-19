@@ -75,8 +75,8 @@ public class ValidationService {
         String eesnimi = profiiliteave.getString("given_name");
         String perenimi = profiiliteave.getString("family_name");
         // ja salvesta seansihoidlasse
-        session.setAttribute("given_name");
-        session.setAttribute("family_name");
+        session.setAttribute("given_name", eesnimi);
+        session.setAttribute("family_name", perenimi);
 
         // Kontrolli tõendi väljaandjat
         String issuer = idTokenHeaderPayload.getString("iss");

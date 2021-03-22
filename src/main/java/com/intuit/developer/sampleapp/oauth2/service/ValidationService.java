@@ -12,9 +12,9 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.log4j.Logger;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -39,7 +39,7 @@ public class ValidationService {
     @Autowired
     public HttpHelper httpHelper;
     
-    private static final HttpClient CLIENT = HttpClientBuilder.create().build();
+    private static final CloseableHttpClient CLIENT = HttpClientBuilder.create().build();
     private static final Logger logger = Logger.getLogger(ValidationService.class);
     
     /**
@@ -162,14 +162,19 @@ public class ValidationService {
 
         try {
 
-            HttpResponse response = CLIENT.execute(TARAKeyRequest);
+            CloseableHttpResponse response = CLIENT.execute(TARAKeyRequest);
+            StringBuffer result;
+            try {
 
-            if (response.getStatusLine().getStatusCode() != 200) {
-                logger.info("TARA allkirjavõtme hankimine ebaõnnestus");
-                return null;
+                if (response.getStatusLine().getStatusCode() != 200) {
+                    logger.info("TARA allkirjavõtme hankimine ebaõnnestus");
+                    return null;
+                }
+
+                result = httpHelper.getResult(response);
+            } finally {
+                response.close();
             }
-
-            StringBuffer result = httpHelper.getResult(response);
             logger.debug("Saadud võti: " + result);
 
             JSONObject jwksPayload = new JSONObject(result.toString());

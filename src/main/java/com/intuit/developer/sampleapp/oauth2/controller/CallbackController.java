@@ -5,12 +5,12 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
@@ -41,7 +41,7 @@ public class CallbackController {
     @Autowired
     public HttpHelper httpHelper;
     
-    private static final HttpClient CLIENT =
+    private static final CloseableHttpClient CLIENT =
       HttpClientBuilder
         .create()
         .build();
@@ -111,15 +111,20 @@ public class CallbackController {
 
         try {
             post.setEntity(new UrlEncodedFormEntity(urlParameters));
-            HttpResponse response = CLIENT.execute(post);
+            CloseableHttpResponse response = CLIENT.execute(post);
 
-            logger.info("Response Code : "+ response.getStatusLine().getStatusCode());
-            if (response.getStatusLine().getStatusCode() != 200) {
-                logger.info("Viga identsustõendi pärimisel");
-                return null;
+            StringBuffer result;
+            try {
+                logger.info("Response Code : "+ response.getStatusLine().getStatusCode());
+                if (response.getStatusLine().getStatusCode() != 200) {
+                    logger.info("Viga identsustõendi pärimisel");
+                    return null;
+                }
+
+                result = httpHelper.getResult(response);
+            } finally {
+                response.close();
             }
-
-            StringBuffer result = httpHelper.getResult(response);
             logger.debug("Identsustõendi päringu vastus: " + result);
 
             return mapper.readValue(result.toString(), IDTokenResponse.class);

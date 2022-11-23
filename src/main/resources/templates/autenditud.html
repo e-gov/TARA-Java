@@ -7,20 +7,26 @@
 
 </head>
 <body>
-  <h1>Autentimisteenuse TARA demo (Java)</h1>
+  <h1>Autentimisteenus TARA erasektori demorakendus</h1>
 
-  <p><a href='https://e-gov.github.io/TARA-Doku/' target='_new'>Autentimisteenuse TARA</a> näidis-klientrakendus</p>
-
-  <p>Welcome, <span style='kood' th:text="${session.given_name}"></span>!</p>
-	
   <p>
-    Autenditi kasutaja: 
+    <a href='https://e-gov.github.io/TARA-Doku/' target='_new'>Autentimisteenuse TARA</a> näidis-klientrakendus.
+  </p>
+
+  <p>
+    Tere, <span style='kood' th:text="${session.given_name}"></span>!
+  </p>
+
+  <p>
+    Autenditi kasutaja:<br>
     sub: <span class='kood' th:text="${session.sub}"></span><br>
     given_name: <span class='kood' th:text="${session.given_name}"></span><br>
     family_name: <span class='kood' th:text="${session.family_name}"></span><br>
   </p>
-  
-  <p>Lähtekood: <a href='https://github.com/e-gov/TARA-Java' target='_new'>https://github.com/e-gov/TARA-Java</a></p>
+
+  <p>
+    Lähtekood: <a href='https://github.com/e-gov/TARA-Java' target='_new'>https://github.com/e-gov/TARA-Java</a>
+  </p>
 
 </body>
 </html>

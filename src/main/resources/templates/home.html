@@ -8,36 +8,44 @@
 </head>
 
 <body>
-  <h1>Autentimisteenuse TARA demo (Java)</h1>
+  <h1>Autentimisteenus TARA erasektori demorakendus</h1>
 
   <p>
-    <a href='https://e-gov.github.io/TARA-Doku/'>TARA </a> on teenus, millega avaliku sektori asutus saab e-teenuses autentida nii Eesti kui ka teisest EL riigist tulnud kasutaja.
-  </p>
-    
-  <p>
-    TARA demo on klientrakendus, mis on ühendatud TARA testteenusega. TARA kaudu on demo ühendatud ka välisriikide eIDAS testteenustega.
+    <a href='https://e-gov.github.io/TARA-Doku/'>TARA</a> on teenus, millega <a href='https://e-gov.github.io/TARA-Doku/TehnilineKirjeldus#9-erasektori-asutuse-erisused'>erasektori asutus</a> saab e-teenuses autentida teistest eIDAS liikmesriikidest tulnud kasutajaid.
   </p>
 
-  <p>Demo pakub võimalust proovida autentimist testnumbritega, -kaartidega või -seadistustega.</p>
-    
-  <p>Vt lähemalt <a href='https://e-gov.github.io/TARA-Doku/Testimine' target='_new'>Autentimisteenus TARA. Testimine</a>.</p>
+  <p>
+    TARA erasektori demorakendus on TARA näidis-klientrakendus. Demorakendus pakub võimalust läbi TARA proovida autentimist välisriikide eIDAS demoteenustega.
+  </p>
+
+  <p>
+    TARA erasektori demorakendus on ühendatud TARA testteenusega. TARA kaudu on demorakendus ühendatud välisriikide eIDAS demoteenustega.
+  </p>
+
+  <p>
+    NB! Riigi Infosüsteemi Amet ei taga teiste riikide autentimisteenuste toimimist. Erasektori autentimise võimalus sõltub eIDAS liikmesriikidest ning võib vastavalt liikmesriikide tegevusele muutuda.
+  </p>
 
   <hr>
 
-  <p>Proovi näiteks mobiil-ID-ga autentimist:</p>
-  
-  <p>1 Kopeeri lõikelauale või jäta meelde testisiku mobiilinumber <code>+372 00000766</code> ja isikukood <code>60001019906</code>. </p>
+  <h2>Autentimise näidisjuhend</h2>
 
-  <p>2 Ava 
-    <a href='/autentimisele' target='_new'>
-      autentimisdialoog (uuel sakil)
-    </a>
-  </p>
+  <ol type="1">
+    <li>
+      Alustage <a href='/autentimisele' target='_new'>autentimisvoogu</a>. Teid suunatakse TARA testteenusesse.
+    </li>
+    <li>
+      Valige rippmenüüst Tšehhi ja vajutage "Jätka" nuppu. Teid suunatakse autentimiseks Tšehhi demoteenusesse.
+    </li>
+    <li>
+      Vali "Testovací profily" ning järgnevalt kuvalt "Přihlásit". Teid autentitakse ja suunatakse tagasi TARA erasektori demorakendusse.
+    </li>
+  </ol>
 
   <p>
-    3 Vali <code>Mobiil-ID</code> ja sisesta testisiku isikukood ning mobiilinumber. Vajuta <code>Jätkan</code>. Testteenus viib autentimise automaatselt lõpuni (7 s viivitusega).
+    Võite proovida ka teiste riikide demoteenuste kaudu autentimist. Kõikidel demoteenustel ei pruugi olla ettemääratud testkasutaja andmeid ja sellistel juhtudel on autentimisvoo läbimiseks vaja valitud riigi autentimisvahendit.
   </p>
- 
+
   <hr>
 
   <p>

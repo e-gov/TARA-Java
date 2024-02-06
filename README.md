@@ -1,4 +1,7 @@
-# TARA-Java
+# [DEPRECATED] TARA-Java
+
+> [!CAUTION]
+> **Tarkvara ei ajakohastata. Uuem info asub https://e-gov.github.io/TARA-Doku/Naited lehel.**
 
 TARA klientrakenduse töötav näide Javas
 
